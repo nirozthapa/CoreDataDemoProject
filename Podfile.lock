@@ -1,0 +1,22 @@
+PODS:
+  - FloatingButtonPOP-swift (1.0.0)
+  - SQLite.swift (0.12.2):
+    - SQLite.swift/standard (= 0.12.2)
+  - SQLite.swift/standard (0.12.2)
+
+DEPENDENCIES:
+  - FloatingButtonPOP-swift
+  - SQLite.swift
+
+SPEC REPOS:
+  trunk:
+    - FloatingButtonPOP-swift
+    - SQLite.swift
+
+SPEC CHECKSUMS:
+  FloatingButtonPOP-swift: 406bc011ed894f1c5f2b59a679ca0fad2d2452db
+  SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
+
+PODFILE CHECKSUM: bfef4baf5286834e5790280b51d269f3bd97c38e
+
+COCOAPODS: 1.8.4
