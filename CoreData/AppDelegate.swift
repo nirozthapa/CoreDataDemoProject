@@ -14,10 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        CoreDataManager.copyFile(fileName: "coredb.sqlite")
-        print( CoreDataManager.copyFile(fileName: "coredb.sqlite"))
-        sharedDatabaseHelper.getDatabase()
-        print(sharedDatabaseHelper.fetchData())
         return true
     }
 

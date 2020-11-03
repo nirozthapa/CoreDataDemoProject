@@ -6,9 +6,18 @@
 //
 
 import UIKit
+import FloatingButtonPOP_swift
 class AddPurchaseViewController: PopupViewController{
+   
+    
+    @IBOutlet weak var lblPurchaseHeading: UILabel!
+    var headerText : String?
     
     override func viewDidLoad() {
         print("loading purchase view controller")
+        self.lblPurchaseHeading.text = self.headerText
+
     }
+    
+    
 }

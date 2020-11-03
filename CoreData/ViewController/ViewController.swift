@@ -8,7 +8,9 @@
 import UIKit
 import FloatingButtonPOP_swift
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,FloaterViewDelegate {
-    let items = ["Item 1", "Item2", "Item3", "Item4"]
+
+    var responseModel = [Response]()
+    var viewcontroller = DatabaseHelper()
 
     func userDidTapOnItem(at index: Int, with model: String) {
         print(index)
@@ -31,29 +33,54 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         tableView.register(UINib(nibName: "HomePageTableViewCell", bundle: nil), forCellReuseIdentifier: "HomePageTableViewCell")
         self.addFloatingButton()
+        self.loadData()
+
+    }
+    
+    func loadData(){
+        viewcontroller.fetchServerData(completion: { [self](resp,err) -> Void in
+            
+            if (resp != nil){
+                self.responseModel = resp as! [Response]
+                DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+
+            }
+            else{
+                print("Data could not be retrived from source")
+            }
+        })
 
     }
     func addFloatingButton(){
-        addFloaterMenu(with: [("Add Items", UIImage(named: "Image"))], mainItem: ("", UIImage(named: "Image")), dropShadow: true)
+        addFloaterMenu(with: [("Add Purchase", UIImage(named: "Image"))], mainItem: ("", UIImage(named: "Image")), dropShadow: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80.0
     }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.responseModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomePageTableViewCell", for: indexPath) as! HomePageTableViewCell
-        cell.lbl_po_id.text = items[indexPath.row]
-        cell.lbl_lastUpadte.text = items[indexPath.row]
-        cell.lbl_total_items.text = items[indexPath.row]
-               return cell
+        cell.lbl_po_id.text = String(self.responseModel[indexPath.row].id!)
+        cell.lbl_lastUpadte.text = self.responseModel[indexPath.row].last_updated
+        cell.lbl_total_items.text = String((self.responseModel[indexPath.row].items?.count)!)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let navVC = self.storyboard!.instantiateViewController(identifier: "ProductViewController") as! ProductViewController
+        navVC.model = self.responseModel[indexPath.row]
+        self.present(navVC, animated: true)
+
         
     }
 }
